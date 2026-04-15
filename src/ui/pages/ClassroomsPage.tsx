@@ -2,13 +2,21 @@ import React from "react";
 import { PageHeader } from "../shared/PageHeader";
 
 export function ClassroomsPage() {
+  const [isCreateOpen, setIsCreateOpen] = React.useState(false);
+  const [classroomName, setClassroomName] = React.useState("");
+
   return (
     <div>
       <PageHeader
         title="My Classrooms"
         subtitle="Manage your class and enrolled students."
         right={
-          <button className="primaryBtn" type="button" style={{ width: 170 }}>
+          <button
+            className="primaryBtn"
+            type="button"
+            style={{ width: 170 }}
+            onClick={() => setIsCreateOpen(true)}
+          >
             + Create Classroom
           </button>
         }
@@ -100,6 +108,58 @@ export function ClassroomsPage() {
           </div>
         </div>
       </div>
+
+      {isCreateOpen ? (
+        <div
+          className="modalBackdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Create New Classroom"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setIsCreateOpen(false);
+          }}
+        >
+          <div className="modal" onMouseDown={(e) => e.stopPropagation()}>
+            <div className="modalTop">
+              <div>
+                <div className="modalTitle">Create New Classroom</div>
+                <div className="modalSub">Give your new class a name.</div>
+              </div>
+              <button
+                type="button"
+                className="modalClose"
+                aria-label="Close"
+                onClick={() => setIsCreateOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <input
+                className="input"
+                value={classroomName}
+                onChange={(e) => setClassroomName(e.target.value)}
+                placeholder="e.g. Jazz Advanced"
+              />
+            </div>
+
+            <div className="modalActions">
+              <button
+                type="button"
+                className="modalPrimary"
+                onClick={() => {
+                  // UI-only: close modal for now
+                  setClassroomName("");
+                  setIsCreateOpen(false);
+                }}
+              >
+                Create Class
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
