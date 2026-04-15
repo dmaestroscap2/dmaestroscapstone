@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { INSTRUMENTS } from "../../data/instruments";
 
 export function StudentSignupPage() {
   const navigate = useNavigate();
@@ -30,11 +31,12 @@ export function StudentSignupPage() {
       </div>
       <div className="field">
         <div className="label">Instrument</div>
-        <select className="select" style={{ width: "100%" }} defaultValue="Piano">
-          <option>Piano</option>
-          <option>Guitar</option>
-          <option>Violin</option>
-          <option>Drums</option>
+        <select className="select" style={{ width: "100%" }} defaultValue="piano">
+          {INSTRUMENTS.map((inst) => (
+            <option key={inst} value={inst}>
+              {inst.charAt(0).toUpperCase() + inst.slice(1)}
+            </option>
+          ))}
         </select>
       </div>
 
