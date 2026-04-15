@@ -10,7 +10,7 @@ export function StudentLoginPage() {
         ♪
       </div>
       <div className="authTitle">Welcome Back</div>
-      <div className="authSub">Sign in to your student account</div>
+      <div className="authSub">Sign in to your member account</div>
 
       <div className="field">
         <div className="label">Email</div>

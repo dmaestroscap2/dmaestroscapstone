@@ -32,7 +32,7 @@ export function LoginPage() {
       <div className="authLinks">
         <div style={{ marginTop: 10 }}>
           <span>Switch to </span>
-          <Link to="/student/login">Student</Link>
+          <Link to="/student/login">Members</Link>
         </div>
         <div style={{ marginTop: 8 }}>
           <span>Don't have an account? </span>

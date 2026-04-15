@@ -12,8 +12,8 @@ export function SessionAnalyticsPage() {
             <select className="select" defaultValue="All Classrooms">
               <option>All Classrooms</option>
             </select>
-            <select className="select" defaultValue="All Students">
-              <option>All Students</option>
+            <select className="select" defaultValue="All Members">
+              <option>All Members</option>
             </select>
           </>
         }
@@ -54,7 +54,7 @@ export function SessionAnalyticsPage() {
       <div style={{ marginTop: 14 }} className="card">
         <div className="sectionTitle">Practice Heatmap</div>
         <div className="sectionSub">
-          When your students practice throughout the week
+          When your members practice throughout the week
         </div>
         <div className="emptyState" style={{ height: 130 }}>
           No practice data yet

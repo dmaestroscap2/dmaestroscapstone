@@ -6,12 +6,16 @@ export function MusicLibraryPage() {
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false);
   const [isUploadOpen, setIsUploadOpen] = React.useState(false);
   const [isAssignOpen, setIsAssignOpen] = React.useState(false);
+  const [isTransposeOpen, setIsTransposeOpen] = React.useState(false);
   const [assignMode, setAssignMode] = React.useState<"class" | "student">("class");
   const [assignTarget, setAssignTarget] = React.useState("");
   const [previewTab, setPreviewTab] = React.useState<
     "original" | "synth" | "instrument"
   >("original");
   const [instrument, setInstrument] = React.useState<Instrument>("piano");
+  const [transposeInstrument, setTransposeInstrument] =
+    React.useState<Instrument>("piano");
+  const [semitones, setSemitones] = React.useState(0);
   const [uploadTitle, setUploadTitle] = React.useState("");
   const [uploadComposer, setUploadComposer] = React.useState("");
   const [uploadFileName, setUploadFileName] = React.useState<string | null>(null);
@@ -95,7 +99,12 @@ export function MusicLibraryPage() {
           >
             ▶ Preview
           </button>
-          <button type="button" className="signOutBtn" style={{ width: 46 }}>
+          <button
+            type="button"
+            className="signOutBtn"
+            style={{ width: 46 }}
+            onClick={() => setIsTransposeOpen(true)}
+          >
             ⇵
           </button>
           <button type="button" className="signOutBtn" style={{ width: 46 }}>
@@ -197,13 +206,111 @@ export function MusicLibraryPage() {
               Sheet Music Preview
             </div>
             <div className="sheetPreviewBox">
-              <div className="sheetPreviewInner">
-                {previewTab === "original"
-                  ? "Original Audio View"
-                  : previewTab === "synth"
-                    ? `Synthesized Notes (${instrument})`
-                    : `Instrument: ${instrument}`}
-              </div>
+              <svg
+                viewBox="0 0 1000 260"
+                width="100%"
+                height="100%"
+                role="img"
+                aria-label={`Sheet music preview for ${instrument}`}
+              >
+                <rect x="0" y="0" width="1000" height="260" fill="rgba(255,255,255,0.01)" />
+
+                {[58, 78, 98, 118, 138].map((y) => (
+                  <line
+                    key={`staff1-${y}`}
+                    x1="30"
+                    y1={y}
+                    x2="970"
+                    y2={y}
+                    stroke="rgba(216,221,231,.25)"
+                    strokeWidth="1"
+                  />
+                ))}
+                {[170, 190, 210, 230, 250].map((y) => (
+                  <line
+                    key={`staff2-${y}`}
+                    x1="30"
+                    y1={y}
+                    x2="970"
+                    y2={y}
+                    stroke="rgba(216,221,231,.2)"
+                    strokeWidth="1"
+                  />
+                ))}
+
+                {[170, 320, 470, 620, 770, 920].map((x) => (
+                  <line
+                    key={`bar-${x}`}
+                    x1={x}
+                    y1="58"
+                    x2={x}
+                    y2="250"
+                    stroke="rgba(216,221,231,.18)"
+                    strokeWidth="1"
+                  />
+                ))}
+
+                <text
+                  x="45"
+                  y="92"
+                  fill="rgba(216,221,231,.85)"
+                  fontSize="30"
+                  fontFamily="serif"
+                >
+                  𝄞
+                </text>
+
+                {[
+                  { x: 210, y: 118, up: true },
+                  { x: 265, y: 98, up: true },
+                  { x: 340, y: 138, up: true },
+                  { x: 420, y: 108, up: true },
+                  { x: 510, y: 88, up: true },
+                  { x: 590, y: 118, up: false },
+                  { x: 665, y: 98, up: false },
+                  { x: 740, y: 128, up: false },
+                  { x: 820, y: 108, up: false },
+                ].map((n, idx) => (
+                  <g key={`n-${idx}`}>
+                    <ellipse
+                      cx={n.x}
+                      cy={n.y}
+                      rx="10"
+                      ry="7"
+                      fill={
+                        previewTab === "original"
+                          ? "rgba(216,221,231,.9)"
+                          : previewTab === "synth"
+                            ? "rgba(126,168,255,.95)"
+                            : "rgba(241,194,75,.95)"
+                      }
+                      transform={`rotate(-20 ${n.x} ${n.y})`}
+                    />
+                    <line
+                      x1={n.up ? n.x + 8 : n.x - 8}
+                      y1={n.y}
+                      x2={n.up ? n.x + 8 : n.x - 8}
+                      y2={n.up ? n.y - 36 : n.y + 36}
+                      stroke="rgba(216,221,231,.85)"
+                      strokeWidth="2"
+                    />
+                  </g>
+                ))}
+
+                <text
+                  x="760"
+                  y="34"
+                  fill="rgba(216,221,231,.45)"
+                  fontSize="12"
+                  fontFamily="ui-sans-serif, system-ui"
+                >
+                  {previewTab === "original"
+                    ? "Original Audio"
+                    : previewTab === "synth"
+                      ? `Synthesized (${instrument})`
+                      : `Instrument: ${instrument}`}
+                </text>
+              </svg>
             </div>
 
             <div className="audioBlock">
@@ -394,7 +501,7 @@ export function MusicLibraryPage() {
                   setAssignTarget("");
                 }}
               >
-                Student
+                Member
               </button>
             </div>
 
@@ -406,7 +513,7 @@ export function MusicLibraryPage() {
                 onChange={(e) => setAssignTarget(e.target.value)}
               >
                 <option value="">
-                  {assignMode === "class" ? "Select Classroom" : "Select Student"}
+                  {assignMode === "class" ? "Select Classroom" : "Select Member"}
                 </option>
                 {assignMode === "class" ? (
                   <>
@@ -429,6 +536,156 @@ export function MusicLibraryPage() {
                 onClick={() => setIsAssignOpen(false)}
               >
                 Confirm Assignment
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {isTransposeOpen ? (
+        <div
+          className="modalBackdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Transpose Piece"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setIsTransposeOpen(false);
+          }}
+        >
+          <div
+            className="modal previewModal"
+            onMouseDown={(e) => e.stopPropagation()}
+            style={{ maxWidth: 980 }}
+          >
+            <div className="modalTop">
+              <div>
+                <div className="previewHeaderTitle">Transpose "FGH"</div>
+                <div className="previewHeaderSub">
+                  Shift all notes up or down by semitones
+                </div>
+              </div>
+              <button
+                type="button"
+                className="modalClose"
+                aria-label="Close"
+                onClick={() => setIsTransposeOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div style={{ marginTop: 14, display: "flex", justifyContent: "space-between" }}>
+              <div className="sectionTitle" style={{ marginBottom: 0 }}>
+                Transpose Amount
+              </div>
+              <div style={{ fontSize: 38, fontWeight: 900, color: "rgba(241,194,75,.95)" }}>
+                {semitones} semitones
+              </div>
+            </div>
+
+            <div style={{ marginTop: 10 }}>
+              <input
+                type="range"
+                min={-12}
+                max={12}
+                step={1}
+                value={semitones}
+                onChange={(e) => setSemitones(Number(e.target.value))}
+                style={{ width: "100%", accentColor: "#f1c24b" }}
+              />
+              <div
+                className="pageSubtitle"
+                style={{ marginTop: 2, display: "flex", justifyContent: "space-between" }}
+              >
+                <span>-12 (1 octave down)</span>
+                <span>0 (original)</span>
+                <span>+12 (1 octave up)</span>
+              </div>
+            </div>
+
+            <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center" }}>
+              <div className="pageSubtitle" style={{ marginTop: 0 }}>
+                Preview as:
+              </div>
+              <select
+                className="select"
+                style={{ minWidth: 170 }}
+                value={transposeInstrument}
+                onChange={(e) => setTransposeInstrument(e.target.value as Instrument)}
+              >
+                {INSTRUMENTS.map((inst) => (
+                  <option key={inst} value={inst}>
+                    {inst}
+                  </option>
+                ))}
+              </select>
+              <button type="button" className="audioBtn">
+                🔊 Play Notes
+              </button>
+            </div>
+
+            <div className="pageSubtitle" style={{ marginTop: 16 }}>
+              Transposed Preview
+            </div>
+            <div className="sheetPreviewBox" style={{ height: 240 }}>
+              <svg viewBox="0 0 1000 240" width="100%" height="100%">
+                <rect x="0" y="0" width="1000" height="240" fill="rgba(255,255,255,0.01)" />
+                {[52, 72, 92, 112, 132].map((y) => (
+                  <line
+                    key={`t-s-${y}`}
+                    x1="30"
+                    y1={y}
+                    x2="970"
+                    y2={y}
+                    stroke="rgba(216,221,231,.24)"
+                    strokeWidth="1"
+                  />
+                ))}
+                <line x1="430" y1="0" x2="430" y2="240" stroke="rgba(241,194,75,.75)" strokeWidth="2" />
+                {[520, 590, 650, 720, 780, 845, 900].map((x, i) => (
+                  <g key={`tn-${x}`}>
+                    <ellipse
+                      cx={x}
+                      cy={105 + (i % 3) * 12}
+                      rx="10"
+                      ry="7"
+                      fill="rgba(216,221,231,.94)"
+                      transform={`rotate(-20 ${x} ${105 + (i % 3) * 12})`}
+                    />
+                    <line
+                      x1={x + 8}
+                      y1={105 + (i % 3) * 12}
+                      x2={x + 8}
+                      y2={68 + (i % 3) * 12}
+                      stroke="rgba(216,221,231,.85)"
+                      strokeWidth="2"
+                    />
+                  </g>
+                ))}
+              </svg>
+            </div>
+
+            <div style={{ marginTop: 10 }}>
+              <button type="button" className="audioBtn">
+                📄 Download Transposed PDF
+              </button>
+            </div>
+
+            <div className="modalActions" style={{ gap: 10 }}>
+              <button
+                type="button"
+                className="signOutBtn"
+                style={{ width: "auto", marginTop: 0 }}
+                onClick={() => setIsTransposeOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="assignConfirmBtn"
+                onClick={() => setIsTransposeOpen(false)}
+              >
+                Apply Transpose
               </button>
             </div>
           </div>

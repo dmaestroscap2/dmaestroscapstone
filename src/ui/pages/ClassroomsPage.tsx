@@ -286,7 +286,7 @@ export function ClassroomsPage() {
               </div>
             </div>
 
-            <div className="monitorSectionLabel">👥 Enrolled Students</div>
+            <div className="monitorSectionLabel">👥 Enrolled Members</div>
             <div className="studentRow">
               <div className="avatarCircle" aria-hidden="true">
                 b

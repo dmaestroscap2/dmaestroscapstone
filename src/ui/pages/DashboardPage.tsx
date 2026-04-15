@@ -16,7 +16,7 @@ export function DashboardPage() {
           <div className="pageSubtitle">Active Courses</div>
         </div>
         <div className="card">
-          <div className="cardLabel">Total Students</div>
+          <div className="cardLabel">Total Members</div>
           <div className="cardValue">1</div>
           <div className="pageSubtitle">1 enrolled</div>
         </div>
@@ -67,7 +67,7 @@ export function DashboardPage() {
               </div>
               <div>
                 <div style={{ fontWeight: 900 }}>pup brushbond</div>
-                <div className="pageSubtitle">1 students</div>
+                <div className="pageSubtitle">1 members</div>
               </div>
             </div>
             <span className="pill">V24TQA</span>

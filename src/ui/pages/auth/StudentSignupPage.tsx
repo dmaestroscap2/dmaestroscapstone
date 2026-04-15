@@ -11,7 +11,7 @@ export function StudentSignupPage() {
         ♪
       </div>
       <div className="authTitle">Join DMAESTRO</div>
-      <div className="authSub">Create your student account</div>
+      <div className="authSub">Create your member account</div>
 
       <div className="field">
         <div className="label">Full Name</div>

@@ -20,6 +20,7 @@ import { StudentPracticePage } from "./pages/student/StudentPracticePage";
 import { StudentAssignmentsPage } from "./pages/student/StudentAssignmentsPage";
 import { StudentAnalyticsPage } from "./pages/student/StudentAnalyticsPage";
 import { StudentFeedbackPage } from "./pages/student/StudentFeedbackPage";
+import { StudentPracticePlayerPage } from "./pages/student/StudentPracticePlayerPage";
 
 export function App() {
   return (
@@ -48,6 +49,7 @@ export function App() {
         <Route path="/student/dashboard" element={<StudentDashboardPage />} />
         <Route path="/student/trainer" element={<StudentTrainerPage />} />
         <Route path="/student/practice" element={<StudentPracticePage />} />
+        <Route path="/student/practice/session" element={<StudentPracticePlayerPage />} />
         <Route path="/student/assignments" element={<StudentAssignmentsPage />} />
         <Route path="/student/analytics" element={<StudentAnalyticsPage />} />
         <Route path="/student/feedback" element={<StudentFeedbackPage />} />

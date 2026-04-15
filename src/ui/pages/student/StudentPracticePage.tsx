@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { PageHeader } from "../../shared/PageHeader";
 
 export function StudentPracticePage() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <PageHeader
@@ -46,7 +49,14 @@ export function StudentPracticePage() {
           </span>
         </div>
 
-        <button className="primaryBtn" type="button" style={{ marginTop: 18 }}>
+        <button
+          className="primaryBtn"
+          type="button"
+          style={{ marginTop: 18 }}
+          onClick={() =>
+            navigate("/student/practice/session?title=happu&subtitle=happy&instrument=piano")
+          }
+        >
           ⦿ Start Practice
         </button>
       </div>

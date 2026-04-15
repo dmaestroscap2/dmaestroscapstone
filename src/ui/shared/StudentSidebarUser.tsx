@@ -11,7 +11,7 @@ export function StudentSidebarUser() {
         </div>
         <div className="userMeta">
           <div className="userName">berto</div>
-          <div className="userRole">Student</div>
+          <div className="userRole">Member</div>
         </div>
       </div>
 

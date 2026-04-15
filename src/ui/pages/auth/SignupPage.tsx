@@ -40,7 +40,7 @@ export function SignupPage() {
       <div className="authLinks">
         <div style={{ marginTop: 10 }}>
           <span>Switch to </span>
-          <Link to="/student/signup">Student</Link>
+          <Link to="/student/signup">Members</Link>
         </div>
         <div style={{ marginTop: 8 }}>
           <span>Already have an account? </span>
